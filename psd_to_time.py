@@ -25,8 +25,8 @@ def log_interp(zz,xx,yy,):
 # In[3]:
 
 
-freq = [20,80,150,200,350,2000]
-amp = [0.01,0.04,0.001,0.001,0.04,0.007042]
+freq = [0,19,20,80,150,200,350,2000]
+amp = [1e-7,1e-7,0.01,0.04,0.001,0.001,0.04,0.007042]
 
 
 # In[4]:
@@ -69,7 +69,7 @@ plt.show()
 
 
 plt.loglog(points,nums)
-plt.title('Interppolated PSD')
+plt.title('Interpolated PSD')
 plt.show()
 
 
@@ -123,6 +123,7 @@ dummy = fft(gfg_inversed)
 plt.loglog(abs(dummy[0:len(dummy)//2]))
 plt.loglog(freq,amp)
 plt.title('FFT of inverted time series')
+plt.legend(['Calculated','Spec'])
 plt.show()
 
 # In[ ]:
