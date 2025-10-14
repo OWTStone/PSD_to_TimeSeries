@@ -10,4 +10,4 @@ PSD (2 vectors of frequency in Hz and power amplitude)
 <li>numPoints - number of time series samples generated (sample rate current set to 2X maximum frequency in PSD)</li>
   </ul>
 
-Output is a vector of samples (time vector must be generated separately) with debug plots showing input spectrum, output signal, and comparision of output to requested input based on FFT performed at end of processing.<br>
+Output is a vector of complex samples (time vector must be generated separately) with negligible imaginary components with debug plots showing input spectrum, output signal, and comparision of output to requested input based on FFT performed at end of processing.<br>
