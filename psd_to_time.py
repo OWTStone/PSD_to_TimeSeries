@@ -7,7 +7,7 @@
 from random import random
 import scipy as sp
 import scipy.interpolate
-from scipy.fft import fft, ifft
+from scipy.fft import fft, ifft, fftfreq
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -27,14 +27,14 @@ def log_interp(zz,xx,yy,):
 
 freq = [0,19,20,80,150,200,350,2000]
 amp = [1e-7,1e-7,0.01,0.04,0.001,0.001,0.04,0.007042]
-
+numPoints = 50000
 
 # In[4]:
 
 
-points = range(freq[0],freq[-1])
-
-
+#points = range(freq[0],freq[-1])
+points = np.linspace(freq[0],freq[-1],num=numPoints+1)
+print(points)
 # In[5]:
 
 
@@ -73,14 +73,6 @@ plt.title('Interpolated PSD')
 plt.show()
 
 
-# In[8]:
-yuck = np.zeros(10000)
-duh = np.ones(10000)
-for j in range(1,len(yuck)):
-  yuck[j] = np.random.normal(0.0,1.0)
-  duh[j] = duh[j] * np.sin(2*3.14159265*100*j/1000)
-  yuck[j] = yuck[j] + duh[j]
-
 halfRange = len(nums)
 print(halfRange)
 for j in range(1,halfRange):
@@ -93,15 +85,6 @@ for j in range(0,len(nums)):
   randomPhase = 2*np.pi*np.random.uniform(0,1)
   complexNums.append(complex(nums[j]*np.sin(randomPhase),nums[j]*np.cos(randomPhase)))
 
-dummy = fft(yuck)
-print("Class of fft variable is",type(dummy))
-plt.plot(yuck)
-plt.title('Time Series')
-plt.show()
-#plt.semilogy(abs(dummy[0:len(dummy)//2]))
-plt.semilogy(abs(dummy))
-plt.title('FFT')
-plt.show()
 
 gfg_inversed = ifft(complexNums)
 #gfg_inversed = ifft(dummy)
@@ -111,23 +94,21 @@ print("Length of frequency vector is",len(points))
 plt.semilogy(nums)
 plt.show()
 
-plt.plot(abs(gfg_inversed))
+plt.plot(gfg_inversed.real)
 plt.title('Time Series from PSD')
 plt.show()
 
 print('Length of IFFT result =',len(gfg_inversed))
 
-dummy = fft(gfg_inversed)
-
+dummy = fft(gfg_inversed.real)
+dummyFreqs = fftfreq(len(dummy)*2,1/numPoints)
+print("Length of frequency vector =",len(dummyFreqs))
 #plt.semilogy(abs(dummy[0:len(dummy)//2]))
-plt.loglog(abs(dummy[0:len(dummy)//2]))
+plt.loglog(points,abs(dummy[0:len(dummy)//2+1]))
 plt.loglog(freq,amp)
 plt.title('FFT of inverted time series')
 plt.legend(['Calculated','Spec'])
 plt.show()
-
+print("Freqs =",dummyFreqs)
 # In[ ]:
-
-
-
 
